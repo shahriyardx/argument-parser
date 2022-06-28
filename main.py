@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from tkinter.ttk import Separator
 
 @dataclass
 class SpecialChars:
@@ -25,6 +26,10 @@ class Parser:
         self._char = self.text[self._index]
 
     def parse(self):
+        if self.separator:
+            args = [arg.strip() for arg in self.text.strip().split(self.separator) if arg.strip()]
+            return args
+        
         while self._index < len(self.text) - 1:
             self.advance()
             if self._escape:
