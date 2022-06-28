@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from tkinter.ttk import Separator
 
 @dataclass
 class SpecialChars:
