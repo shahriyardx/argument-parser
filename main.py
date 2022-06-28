@@ -1,3 +1,11 @@
+from dataclasses import dataclass
+
+@dataclass
+class SpecialChars:
+    SPACE: str = " "
+    QUOT: str = "\""
+    ESCAPE: str = "\\"
+
 class Parser:
     """Argument parser from string"""
 
@@ -24,12 +32,12 @@ class Parser:
                 self._escape = False
                 continue
 
-            if self._char == "\\":
+            if self._char == SpecialChars.ESCAPE:
                 self._escape = True
                 continue
 
             if self._quot:
-                if self._char == '"':
+                if self._char == SpecialChars.QUOT:
                     self._arguments.append(self._current)
                     self._current = ""
                     self._quot = False
@@ -37,7 +45,7 @@ class Parser:
                     self._current += self._char
                 continue
 
-            if self._char == '"':
+            if self._char == SpecialChars.QUOT:
                 if self._current:
                     self._arguments.append(self._current)
                     self._current = ""
@@ -45,7 +53,7 @@ class Parser:
                 self._quot = True
                 continue
 
-            if self._char == " ":
+            if self._char == SpecialChars.SPACE:
                 self._quot = False
                 if self._current:
                     self._arguments.append(self._current)
@@ -55,7 +63,7 @@ class Parser:
 
         if self._current:
             if self._quot:
-                self._current = '"' + self._current
+                self._current = SpecialChars.QUOT + self._current
 
             rest_args = [arg for arg in self._current.split(" ") if arg.strip()]
             self._arguments += rest_args
