@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class SpecialChars:
     SPACE: str = " "
-    QUOT: str = "\""
+    QUOT: str = '"'
     ESCAPE: str = "\\"
+
 
 class Parser:
     """Argument parser from string"""
@@ -26,9 +28,13 @@ class Parser:
 
     def parse(self):
         if self.separator:
-            args = [arg.strip() for arg in self.text.strip().split(self.separator) if arg.strip()]
+            args = [
+                arg.strip()
+                for arg in self.text.strip().split(self.separator)
+                if arg.strip()
+            ]
             return args
-        
+
         while self._index < len(self.text) - 1:
             self.advance()
             if self._escape:
@@ -74,7 +80,8 @@ class Parser:
 
         return self._arguments
 
-with open('content.txt') as f:
+
+with open("content.txt") as f:
     content = f.read()
     print(content)
 
